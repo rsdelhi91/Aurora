@@ -17,8 +17,8 @@ web_app_src: php_application.php
 web_app_dst: /var/www/html/index.php
 
 # Specify metadata information for the Web app file
-web_app_owner: test_user
-web_app_group: test
+web_app_owner: root
+web_app_group: root
 web_app_mode: 777
 
 # Specify the conf file that will replace the original conf on server
