@@ -92,7 +92,7 @@ def manage_dependencies(connection, session, parsed_steps, config_list, install)
           else:
             connection.exec_command(session, "DEBIAN_FRONTEND=noninteractive apt-get purge --auto-remove " + package + " -y")
     else:
-      print("ERROR: packages need to be of type list but are of type:", type(config_list[packages]))
+      print("ERROR: packages need to be of type list but is of type:", type(config_list[packages]))
       sys.exit()
     if "restart" in parsed_steps:
       service = check_env_var(parsed_steps["restart"])
@@ -115,7 +115,7 @@ def restart_service(connection, session, services, log=False):
       else:
         connection.exec_command(session, "systemctl restart " + service)
   else:
-    print("ERROR: services is not of type list")
+    print("ERROR: services needs to be of type list but is of type:", type(services))
     sys.exit()
 
 # Transfers a file from the /files dir to the remote instance 
