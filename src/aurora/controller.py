@@ -145,22 +145,22 @@ def transfer_file(connection, session, parsed_steps, config_list):
                                 log=True)
         else:
           connection.exec_command(session, "chown " + 
-                                config_list[owner] + ":" + 
-                                config_list[group] + " " + 
-                                config_list[dst_location])
-    if "mode" in metadata:
-      mode = check_env_var(metadata["mode"])
-      params_present(mode, config_list)
-      print("Updating the mode of " + config_list[dst_location] + " to: " + str(config_list[mode]))
-      if "log" in parsed_steps:
-        connection.exec_command(session, "chmod " + 
-                              str(config_list[mode]) + " " + 
-                              config_list[dst_location],
-                              log=True)
-      else:
-        connection.exec_command(session, "chmod " + 
-                              str(config_list[mode]) + " " + 
-                              config_list[dst_location])
+                                  config_list[owner] + ":" + 
+                                  config_list[group] + " " + 
+                                  config_list[dst_location])
+      if "mode" in metadata:
+        mode = check_env_var(metadata["mode"])
+        params_present(mode, config_list)
+        print("Updating the mode of " + config_list[dst_location] + " to: " + str(config_list[mode]))
+        if "log" in parsed_steps:
+          connection.exec_command(session, "chmod " + 
+                                  str(config_list[mode]) + " " + 
+                                  config_list[dst_location],
+                                  log=True)
+        else:
+          connection.exec_command(session, "chmod " + 
+                                  str(config_list[mode]) + " " + 
+                                  config_list[dst_location])
     if "restart" in parsed_steps:
       service = check_env_var(parsed_steps["restart"])
       params_present(service, config_list)
