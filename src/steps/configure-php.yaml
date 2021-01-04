@@ -1,0 +1,36 @@
+---
+
+- name: deploy php web application
+  hosts: "{{ webservers }}"
+  remote_user: "{{ user }}"
+  pwd: "{{ ssh_pwd }}"
+
+  tasks:
+  # Should INSTALL and REMOVE packages
+  - name: install dependencies on host
+    install: 
+      packages: "{{ packages }}"
+      #restart: "{{ restart_packages }}"
+      log: True
+
+  # Specify file content and metadata
+  # Restart the service after updating/SFTP the file
+  - name: copy php application to host
+    sftp:
+      src_location: "{{ web_app_src }}"
+      dst_location: "{{ web_app_dst }}"
+      metadata:
+        owner: "{{ web_app_owner }}"
+        group: "{{ web_app_group }}"
+        mode: "{{ web_app_mode }}"
+      log: True
+
+  - name: copy the conf file for displaying the php web app
+    sftp:
+      src_location: "{{ php_conf_src }}"
+      dst_location: "{{ php_conf_dst }}"
+      metadata:
+        owner: "{{ conf_owner }}"
+        group: "{{ conf_group }}"
+        mode: "{{ conf_mode }}"
+      restart: "{{ restart_packages }}"
