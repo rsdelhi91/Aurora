@@ -6,15 +6,12 @@
   pwd: "{{ ssh_pwd }}"
 
   tasks:
-  # Should INSTALL and REMOVE packages
   - name: install dependencies on host
     install: 
       packages: "{{ packages }}"
-      #restart: "{{ restart_packages }}"
+      #restart: "{{ restart_services }}"
       log: True
 
-  # Specify file content and metadata
-  # Restart the service after updating/SFTP the file
   - name: copy php application to host
     sftp:
       src_location: "{{ web_app_src }}"
@@ -33,4 +30,4 @@
         owner: "{{ conf_owner }}"
         group: "{{ conf_group }}"
         mode: "{{ conf_mode }}"
-      restart: "{{ restart_packages }}"
+      restart: "{{ restart_services }}"

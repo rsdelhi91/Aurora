@@ -1,42 +1,25 @@
-# import paramiko
+""" Manage SSH connections and perform remote command executions
 
-# ssh = paramiko.SSHClient()
-# ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-# a = ssh.connect(hostname = hostname, username = user, password = password, timeout = 5000)
+This file uses paramiko to create and maintain SSH connections 
+with the specified remote hosts and provide an interface to run
+remote shell command executions passed by the Aurora controller 
+file.
 
-# command = "ls"
-
-# try:
-#     ssh.connect(hostname = hostname, username = user, password = password, timeout = 5000)
-# except paramiko.AuthenticationException:
-#     print("Authentication failed, please verify your credential")
-# except paramiko.SSHException:
-#     print("Could not establish SSH connection: %s" % paramiko.SSHException)
-# except Exception as TimeoutError:
-#     print("Unable to connect, please verify network connectivity")
-# except socket.timeout as e:
-#     print("Connection got timed out")
-# else:
-#     print('SSH is successful to device ' + hostname)
-#     stdin, stdout, stderr = ssh.exec_command(command, timeout=10)
-#     ssh.ssh_output = stdout.readlines()
-#     ssh.ssh_error = stderr.readlines()
-#     if ssh.ssh_error:
-#         print("Problem occurred while running command:" + command + " The error is " + ssh.ssh_error)
-#     else:
-#         print("Command execution completed successfully")
-#         print('\n'.join(ssh.ssh_output))
-
+It also performs SFTP to transfer files from the /files dir onto 
+remote hosts.
+"""
 
 import paramiko
 import socket
 
 class SSHClient:
+
   def __init__(self, hostname, username, password):
     self.hostname = hostname
     self.username = username
     self.password = password
 
+  # Create an SSH connection with the specified remote host
   def connect(self):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())  
@@ -54,6 +37,7 @@ class SSHClient:
       print("\nSSH is successful to device " + self.hostname + "\n")
       return ssh
 
+  # Run commands on a connected remote host
   def exec_command(self, ssh, command, log=False):
     print("Running command: " + command)
     stdin, stdout, stderr = ssh.exec_command(command, timeout=1000)
@@ -67,6 +51,7 @@ class SSHClient:
         print('\n'.join(ssh.ssh_output))
     print("*"*50 + "\n")
 
+  # Transfer files from the local /files dir to a remote host
   def sftp_file(self, ssh, src_location, dst_location):
     print("SFTP file: " + src_location + " to " + dst_location)
     sftp = ssh.open_sftp()
