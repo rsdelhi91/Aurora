@@ -1,0 +1,35 @@
+# Specify IP addresses of hosts that need to be configured
+webservers:
+  - 54.162.212.238
+  - 54.197.201.77
+
+# Specify username and password of hosts for SSH
+user: root
+ssh_pwd: {{ pwd }}
+
+# Specify packages that need to be configured on the destination host(s)
+packages:
+  - php
+  - libapache2-mod-php
+
+# Specify Web app file that needs to be placed on the web server
+web_app_src: php_application.php
+web_app_dst: /var/www/html/index.php
+
+# Specify metadata information for the Web app file
+web_app_owner: test_user
+web_app_group: test
+web_app_mode: 777
+
+# Specify the conf file that will replace the original conf on server
+php_conf_src: dir.conf
+php_conf_dst: /etc/apache2/mods-available/dir.conf
+
+# Specify metadata information for the conf file
+conf_owner: root
+conf_group: root
+conf_mode: 644
+
+# Specify the services that need to be restarted
+restart_services:
+  - apache2

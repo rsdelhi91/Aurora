@@ -32,7 +32,7 @@ print(ascii_banner)
 
 # IF these files are not present then throw error
 step_file = "../steps/" + sys.argv[1]
-config_file = "../env/" + sys.argv[2]
+config_file = "../environment/" + sys.argv[2]
 
 
 # Check if the parameters provided in the step file are present
