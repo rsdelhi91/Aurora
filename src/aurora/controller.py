@@ -47,7 +47,7 @@ def check_env_var(param):
   if param.startswith("{{") and len(param.split()) == 3:
     return param.split()[1]
   else:
-    print("ERROR: " + param + " is not properly formatted")
+    print("ERROR: " + param + " is not properly formatted as an env var")
     sys.exit()
 
 def manage_dependencies(connection, session, parsed_steps, config_list, install):
