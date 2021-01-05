@@ -12,6 +12,8 @@ keywords:
 
 Each of these keywords can contain a number of optional 
 parameters.
+
+Author: Rahul Sharma <sharma1@student.unimelb.edu.au>
 """
 
 # Dependency

@@ -7,6 +7,8 @@ file.
 
 It also performs SFTP to transfer files from the /files dir onto 
 remote hosts.
+
+Author: Rahul Sharma <sharma1@student.unimelb.edu.au>
 """
 
 import paramiko
