@@ -185,7 +185,8 @@ print("*"*50 + "\n")
 print(ascii_banner)
 
 if len(sys.argv) < 3:
-   print('ERROR: no arguments passed')
+   print("ERROR: incorrect no of arguments passed")
+   print("Correct format is: python3 <step-file.yaml> <env_var_configuration.yaml>")
    sys.exit()
 
 step_file = "../steps/" + sys.argv[1]
