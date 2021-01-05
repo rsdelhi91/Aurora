@@ -207,4 +207,4 @@ The `configure-php-log.yaml` is the step file we write in the `/steps` dir and t
 
 ## Author:
 
-- Rahul Sharma <sharma1@student.unimelb.edu.au>
+- Rahul Sharma (<sharma1@student.unimelb.edu.au>)
