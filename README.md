@@ -2,6 +2,21 @@
 
 ## Aurora Documentation
 
+```
+**************************************************
+**************************************************
+
+    _                             
+   / \  _   _ _ __ ___  _ __ __ _ 
+  / _ \| | | | '__/ _ \| '__/ _` |
+ / ___ \ |_| | | | (_) | | | (_| |
+/_/   \_\__,_|_|  \___/|_|  \__,_|
+                                  
+
+**************************************************
+**************************************************
+```
+
 This project contains a custom configuration management tool written in Python called Aurora, to configure remote servers. It uses a YAML based setup script to state the steps needed and gets executed in a sequential manner.
 
 It has the following directory structure:
