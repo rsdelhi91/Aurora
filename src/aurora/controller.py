@@ -187,7 +187,7 @@ with open(step_file) as file:
 
 print("Step file loaded successfully from: " + step_file + "\n")
 print("*"*50 + "\n")
-if "name" in steps_list[0]["name"]:
+if "name" in steps_list[0]:
   print("Starting Steps for: " + steps_list[0]["name"] + "\n")
 else:
   print("ERROR: name needs to be specified for the starting block")
