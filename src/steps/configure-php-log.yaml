@@ -9,7 +9,6 @@
   - name: install dependencies on host
     install: 
       packages: "{{ packages }}"
-      #restart: "{{ restart_services }}"
       log: True
 
   - name: copy php application to host
