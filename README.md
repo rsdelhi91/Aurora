@@ -36,6 +36,8 @@ It has the following directory structure:
 
 (**Note:** Currently testing is done manually but this will be automated using the `unittest` library in the future)
 
+## Aurora Keywords
+
 Aurora supports the following high level keywords at present:
 
 - `install`: This installs standard debian packages on a remote server.
