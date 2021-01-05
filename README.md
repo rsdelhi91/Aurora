@@ -57,8 +57,8 @@ Each of these keywords allow further params to be included as part of their exec
   - `src_location`: This specifies the env var reference of the source file in the `/files` dir that needs to be transferred to the remote host. Only files in the `/files` dir will be used by Aurora so the file name alone is needed, not the entire path.
   - `dst_location`: This specifies the env var reference of the destination host path where the local file needs to be transferred to. This is similar to the way the linux `mv` command specifies the end destination.
   - `metadata` (Optional): This specifies the env var reference of the file metadata as given below. Since this is an optional param, the below params are also optional.
-    - `owner`: This specifies the env var reference of the file owner, similar to the `user` in the `chown` command. This is a mandatory param is `metadata` is used.
-    - `group`: This specifies the env var reference of the group ownership, similar to the `group` in the `chown` command. This is a mandatory param is `metadata` is used.
+    - `owner`: This specifies the env var reference of the file owner, similar to the `user` in the `chown` command. This is a mandatory param if `metadata` is used.
+    - `group`: This specifies the env var reference of the group ownership, similar to the `group` in the `chown` command. This is a mandatory param if `metadata` is used.
     - `mode` (Optional): This specifies the env var reference of the access permissions of the file system object. This can be written in an integer format like `0777` or `a+rwx`.
   - `log` (Optional): If this is set to `True` it enables verbose mode to view all the steps being executed along with their response. By default this is set to `False`. This needs to be enabled for each task step block.
   - `restart`(Optional): This specifies the env var reference of the packages that need to be restarted as part of this task step. The value for this needs to be specified as a `list`.
