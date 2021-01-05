@@ -30,7 +30,7 @@ print("*"*50)
 print("*"*50 + "\n")
 print(ascii_banner)
 
-# IF these files are not present then throw error
+# TODO: IF these files are not present then throw error
 step_file = "../steps/" + sys.argv[1]
 config_file = "../environment/" + sys.argv[2]
 
@@ -185,7 +185,11 @@ with open(step_file) as file:
 
 print("Step file loaded successfully from: " + step_file + "\n")
 print("*"*50 + "\n")
-print("Starting Steps for: " + steps_list[0]['name'] + "\n")
+if "name" in steps_list[0]["name"]:
+  print("Starting Steps for: " + steps_list[0]["name"] + "\n")
+else:
+  print("ERROR: name needs to be specified for the starting block")
+  sys.exit()
 print("*"*50)
 
 # Verify that the hosts and ssh related params are specified 
@@ -203,11 +207,17 @@ if "hosts" in steps_list[0] and "remote_user" in steps_list[0] and "pwd" in step
       session = connection.connect()
       print("*"*50 + "\n")
       for task in steps_list[0]["tasks"]:
-        if "install" in task:
-          manage_dependencies(connection, session, task["install"], config_list, install=True)
-        if "uninstall" in task:
-          manage_dependencies(connection, session, task["uninstall"], config_list, install=False)
-        if "sftp" in task:
-          transfer_file(connection, session, task["sftp"], config_list)
+        if "name" in task:
+          print("Currently executing: " + task["name"] + "\n")
+          if "install" in task:
+            manage_dependencies(connection, session, task["install"], config_list, install=True)
+          if "uninstall" in task:
+            manage_dependencies(connection, session, task["uninstall"], config_list, install=False)
+          if "sftp" in task:
+            transfer_file(connection, session, task["sftp"], config_list)
+        else:
+          print("ERROR: name needs to be specified for all tasks")
+          sys.exit()
   else:
     print("ERROR: hosts needs to be of type list but is of type", type(config_list[hosts]))
+    sys.exit()
