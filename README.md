@@ -159,6 +159,8 @@ The `src/steps` dir also contains 7 test step files as follows:
 - `test-not-use-env-var.yaml`: This captures the error message when the env var references are not used in the step file. Any of the env var references can be replaced with hard-coded values and the same error message will be captured.
 - `test-unknown-keyword.yaml`: This captures the error message when an unknown high level keyword is used in the step file.
 
+There are also checks for less than the two files being passed during execution - the step file and the configuration values file or incorrect file names being passed.
+
 ## Environment requirements
 
 - Python 3.6.6 or higher
