@@ -19,9 +19,13 @@ It has the following directory structure:
     │   ├── dir.conf
     │   └── php_application.php
     ├── scripts
-    │   └── bootstrap.sh
+    │   ├── bootstrap.sh
+    │   └── requirements.txt
     └── steps
-        └── configure-php.yaml
+        ├── configure-php-log.yaml
+        ├── configure-php-no-log.yaml
+        ├── uninstall-php-and-apache-log.yaml
+        └── uninstall-php-and-apache-no-log.yaml
 ```
 - `src`: This contains the source code and the configuration files needed to configure remote servers.
 - `aurora`: This dir contains the controller source files for Aurora along with its dependent classes.
@@ -70,6 +74,19 @@ Each of these keywords allow further params to be included as part of their exec
   tasks:
 ```
 
+The configuration value file in the `/environment` dir will look as follows (pwd is a random string in this snippet):
+
+```
+# Specify IP addresses of hosts that need to be configured
+webservers:
+  - 54.162.212.238
+  - 54.197.201.77
+
+# Specify username and password of hosts for SSH
+user: root
+ssh_pwd: TESTPWDONLY
+```
+
 - The steps in the tasks to be executed follow a similar structure, for instance if we want to install a package on a remote host, we will use the `install` keyword as follows, with the values provided as env var references that are resolved by Aurora at run time:
 
 ```
@@ -85,6 +102,25 @@ Each of these keywords allow further params to be included as part of their exec
     install: 
       packages: "{{ packages }}"
 ```
+
+The configuration value file in the `/environment` dir will look as follows (pwd is a random string in this snippet):
+
+```
+# Specify IP addresses of hosts that need to be configured
+webservers:
+  - 54.162.212.238
+  - 54.197.201.77
+
+# Specify username and password of hosts for SSH
+user: root
+ssh_pwd: {{ pwd }}
+
+# Specify packages that need to be configured on the destination host(s)
+packages:
+  - php
+  - libapache2-mod-php
+```
+
 - If we want to enable logging to view a more verbose output for this block then we can include the `log` param as follows:
 
 ```
@@ -101,3 +137,25 @@ Each of these keywords allow further params to be included as part of their exec
       packages: "{{ packages }}"
       log: True
 ```
+
+## Environment requirements
+
+- Python 3.6.6 or higher
+
+## Running Aurora:
+
+For initial setup of the dependencies, we need to perform the following steps:
+- We need to `cd` into the `/src/scripts` dir where the `bootstrap.sh` script is located.
+- Run `. ./bootstrap.sh`. This installs pip3, a virtual env for python3, and packages needed for Aurora as listed in the `requirements.txt` in the same dir.
+
+(**Note:** The `pyyaml` package currently has issues with building `wheel` but is still installed and works without any issues)
+
+To run Aurora, we need to perform the following steps:
+
+- We need to `cd` into the `src/environment` dir where the env var configuration values file is located. In the current project we have `dev.yaml` which serves as this file. In `dev.yaml`, replace the `{{ pwd }}` param with the pwd of the SSH host.
+- We need to `cd` into the `/src/aurora/` dir where the `controller.py` file is located. 
+- Run the following command: `python3 controller.py configure-php-log.yaml dev.yaml` where the `configure-php-log.yaml` is the step file we write in the `/steps` dir and the `dev.yaml` is the configuration value file we write in the `/environment` dir.
+
+## Author:
+
+- Rahul Sharma <sharma1@student.unimelb.edu.au>
