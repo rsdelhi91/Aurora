@@ -142,6 +142,13 @@ packages:
       log: True
 ```
 
+The `src/steps` dir contains 4 example step files as follows:
+
+- `configure-php-log.yaml`: This step file will configure web servers to host a sample `Hello, world!` PHP application in verbose mode, showing all the output for every step.
+- `configure-php-no-log.yaml`: This step file will configure web servers to host a sample `Hello, world!` PHP application showing concise output for every step.
+- `uninstall-php-and-apache-log.yaml`: This step file will uninstall the apache2 and php debian packages from the remote servers, showing all the output for every step.
+- `uninstall-php-and-apache-no-log.yaml`: This step file will uninstall the apache2 and php debian packages from the remote servers, showing concise output for every step.
+
 ## Environment requirements
 
 - Python 3.6.6 or higher
