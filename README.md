@@ -34,7 +34,7 @@ It has the following directory structure:
 - `scripts`: This dir contains any additional scripts for setup and managing dependencies for Aurora. This currently has a bootstrap script to setup the python dependencies needed to run Aurora.
 - `steps`: This dir contains the YAML based step files that are executed sequentially on the remote server. These steps use inputs in the form of variables that are resolved using the values present in the configuration file kept in the `/environment` dir. These steps only accept variable references and not direct hard-coded values.
 
-(**Note:** Currently testing is done manually but this will be automated using the `unittest` library in the future)
+(**Note:** Currently testing is done manually but this will be automated using the `unittest` library in the future in its own directory)
 
 ## Aurora Keywords
 
