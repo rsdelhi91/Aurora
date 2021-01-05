@@ -1,0 +1,11 @@
+---
+
+- name: deploy php web application
+  hosts: "{{ webservers }}"
+  pwd: "{{ ssh_pwd }}"
+
+  tasks:
+  - name: install dependencies on host
+    install: 
+      packages: "{{ packages }}"
+      log: True

@@ -1,0 +1,12 @@
+---
+
+- name: deploy php web application
+  hosts: "{{ webservers }}"
+  remote_user: "{{ user }}"
+  pwd: "{{ ssh_pwd }}"
+
+  tasks:
+  - name: install dependencies on host
+    install: 
+      packages: 127.0.0.1
+      log: True

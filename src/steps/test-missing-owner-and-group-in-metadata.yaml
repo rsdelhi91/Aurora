@@ -1,0 +1,20 @@
+---
+
+- name: deploy php web application
+  hosts: "{{ webservers }}"
+  remote_user: "{{ user }}"
+  pwd: "{{ ssh_pwd }}"
+
+  tasks:
+  - name: install dependencies on host
+    install: 
+      packages: "{{ packages }}"
+      log: True
+
+  - name: copy php application to host
+    sftp:
+      src_location: "{{ web_app_src }}"
+      dst_location: "{{ web_app_dst }}"
+      metadata:
+        mode: "{{ web_app_mode }}"
+      log: True

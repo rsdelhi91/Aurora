@@ -149,6 +149,16 @@ The `src/steps` dir contains 4 example step files as follows:
 - `uninstall-php-and-apache-log.yaml`: This step file will uninstall the apache2 and php debian packages from the remote servers, showing all the output for every step.
 - `uninstall-php-and-apache-no-log.yaml`: This step file will uninstall the apache2 and php debian packages from the remote servers, showing concise output for every step.
 
+The `src/steps` dir also contains 7 test step files as follows:
+
+- `test-missing-owner-and-group-in-metadata.yaml`: This captures the error message when the metadata param is used without the `owner` and `group` params.
+- `test-missing-src-location-in-sftp.yaml`: This captures the error message when the `src_location` param is not used in the `sftp` keyword.
+- `test-no-name-in-initial-block.yaml`: This captures the error message when the `name` param is not used in the initial block of the step file.
+- `test-no-name-in-tasks.yaml`: This captures the error message when the `name` param is not used in the `task` block of the step file.
+- `test-no-remote-user-in-initial-block.yaml`: This captures the error message when the ssh `remote_user` param is not used in the initial block of the step file. 
+- `test-not-use-env-var.yaml`: This captures the error message when the env var references are not used in the step file. Any of the env var references can be replaced with hard-coded values and the same error message will be captured.
+- `test-unknown-keyword.yaml`: This captures the error message when an unknown high level keyword is used in the step file.
+
 ## Environment requirements
 
 - Python 3.6.6 or higher

@@ -244,10 +244,13 @@ if "hosts" in steps_list[0] and "remote_user" in steps_list[0] and "pwd" in step
           print("Currently executing: " + task["name"] + "\n")
           if "install" in task:
             manage_dependencies(connection, session, task["install"], config_list, install=True)
-          if "uninstall" in task:
+          elif "uninstall" in task:
             manage_dependencies(connection, session, task["uninstall"], config_list, install=False)
-          if "sftp" in task:
+          elif "sftp" in task:
             transfer_file(connection, session, task["sftp"], config_list)
+          else:
+            print("ERROR: unknown command. Please use install, uninstall, or sftp only")
+            sys.exit()
         else:
           print("ERROR: name needs to be specified for all tasks")
           sys.exit()

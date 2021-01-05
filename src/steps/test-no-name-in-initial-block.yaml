@@ -1,0 +1,11 @@
+---
+
+- hosts: "{{ webservers }}"
+  remote_user: "{{ user }}"
+  pwd: "{{ ssh_pwd }}"
+
+  tasks:
+  - name: install dependencies on host
+    install: 
+      packages: "{{ packages }}"
+      log: True
