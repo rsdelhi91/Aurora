@@ -29,4 +29,5 @@
         owner: "{{ conf_owner }}"
         group: "{{ conf_group }}"
         mode: "{{ conf_mode }}"
+      log: True
       restart: "{{ restart_services }}"

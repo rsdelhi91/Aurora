@@ -9,3 +9,4 @@
   - name: uninstall dependencies on host
     uninstall: 
       packages: "{{ packages }}"
+      log: True
