@@ -2,7 +2,7 @@
 
 ## Aurora Documentation
 
-This project contains a custom configuration management tool written in Python called Aurora, to configure remote servers. It uses a YAML based setup script to state the steps needed to execute in a sequential manner.
+This project contains a custom configuration management tool written in Python called Aurora, to configure remote servers. It uses a YAML based setup script to state the steps needed and gets executed in a sequential manner.
 
 It has the following directory structure:
 
@@ -32,7 +32,7 @@ It has the following directory structure:
 - `environment`: This dir contains the values for the params specified in the YAML based step files. This can be segregated based on environments to dynamically inject secrets and manage configuration.
 - `files`: This dir contains files that need to be transferred to remote servers as part of its SFTP capability. Files placed in this dir only will be used for SFTP.
 - `scripts`: This dir contains any additional scripts for setup and managing dependencies for Aurora. This currently has a bootstrap script to setup the python dependencies needed to run Aurora.
-- `steps`: This dir contains the YAML based step files that are executed sequentially on the remote server. These steps use inputs in the form of variables that are resolved using the values present in the configuration file kept in the `/environment` dir. These steps only accept variable references and not direct hardcoded values.
+- `steps`: This dir contains the YAML based step files that are executed sequentially on the remote server. These steps use inputs in the form of variables that are resolved using the values present in the configuration file kept in the `/environment` dir. These steps only accept variable references and not direct hard-coded values.
 
 (**Note:** Currently testing is done manually but this will be automated using the `unittest` library in the future)
 
@@ -57,8 +57,8 @@ Each of these keywords allow further params to be included as part of their exec
   - `src_location`: This specifies the env var reference of the source file in the `/files` dir that needs to be transferred to the remote host. Only files in the `/files` dir will be used by Aurora so the file name alone is needed, not the entire path.
   - `dst_location`: This specifies the env var reference of the destination host path where the local file needs to be transferred to. This is similar to the way the linux `mv` command specifies the end destination.
   - `metadata` (Optional): This specifies the env var reference of the file metadata as given below. Since this is an optional param, the below params are also optional.
-    - `owner` (Optional): This specifies the env var reference of the file owner, similar to the `user` in the `chown` command.
-    - `group` (Optional): This specifies the env var reference of the group ownership, similar to the `group` in the `chown` command.
+    - `owner`: This specifies the env var reference of the file owner, similar to the `user` in the `chown` command. This is a mandatory param is `metadata` is used.
+    - `group`: This specifies the env var reference of the group ownership, similar to the `group` in the `chown` command. This is a mandatory param is `metadata` is used.
     - `mode` (Optional): This specifies the env var reference of the access permissions of the file system object. This can be written in an integer format like `0777` or `a+rwx`.
   - `log` (Optional): If this is set to `True` it enables verbose mode to view all the steps being executed along with their response. By default this is set to `False`. This needs to be enabled for each task step block.
   - `restart`(Optional): This specifies the env var reference of the packages that need to be restarted as part of this task step. The value for this needs to be specified as a `list`.

@@ -151,6 +151,9 @@ def transfer_file(connection, session, parsed_steps, config_list):
                                   config_list[owner] + ":" + 
                                   config_list[group] + " " + 
                                   config_list[dst_location])
+      else:
+        print("ERROR: both owner and group are needed for file metadata")
+        sys.exit()
       if "mode" in metadata:
         mode = check_env_var(metadata["mode"])
         params_present(mode, config_list)
