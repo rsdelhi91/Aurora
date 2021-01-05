@@ -254,3 +254,6 @@ if "hosts" in steps_list[0] and "remote_user" in steps_list[0] and "pwd" in step
   else:
     print("ERROR: hosts needs to be of type list but is of type", type(config_list[hosts]))
     sys.exit()
+else:
+  print("\nERROR: ssh params are not present")
+  sys.exit()
