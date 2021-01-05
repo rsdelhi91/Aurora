@@ -16,29 +16,16 @@ parameters.
 Author: Rahul Sharma <sharma1@student.unimelb.edu.au>
 """
 
-# Dependency
-# pip install pyyaml
-# pip install -U PyYAML # Needs to be 5.1 or equivalent
-# One that worked:
-# sudo -H pip3 install --ignore-installed PyYAML
-# pip install pyfiglet
-
-import yaml, sys, pyfiglet
+import yaml, sys, pyfiglet, os
 from ssh_client import *
 
-# Used to print an ASCII banner for Aurora
-ascii_banner = pyfiglet.figlet_format("Aurora")
-print("*"*50)
-print("*"*50 + "\n")
-print(ascii_banner)
-
-# TODO: IF these files are not present then throw error
-step_file = "../steps/" + sys.argv[1]
-config_file = "../environment/" + sys.argv[2]
-
-
-# Check if the parameters provided in the step file are present
 def params_present(param, parsed_config):
+  """ Checks if the parameters provided are present
+
+  variable inputs:
+    param - can be a dictionary, a string, or an integer parameter
+    parsed_config - the yaml parsed configuration values
+  """
   if param in parsed_config and isinstance(parsed_config[param], list):
     if len(parsed_config[param]) > 0:
         return True
@@ -51,27 +38,28 @@ def params_present(param, parsed_config):
   print("ERROR: " + param + " is empty or not present")
   sys.exit()
 
-
-print("*"*50)
-print("*"*50 + "\n")
-print("Loading Config from: " + config_file + "\n")
-
-# Read the configuration values like hosts, ssh params, etc
-with open(config_file) as file:
-  config_list = yaml.load(file, Loader=yaml.FullLoader)
-
-# Check if the parameters provided in the steps file are 
-# correctly formatted
 def check_env_var(param):
+  """Check if the env var parameters are formatted correctly
+
+  variable inputs:
+    param: env var references used in the step yaml file
+  """
   if param.startswith("{{") and len(param.split()) == 3:
     return param.split()[1]
   else:
     print("ERROR: " + param + " is not properly formatted")
     sys.exit()
 
-
-# Installs and Uninstalls packages on a standard debian image
 def manage_dependencies(connection, session, parsed_steps, config_list, install):
+  """Installs and Uninstalls packages on a standard debian image
+
+  variable inputs:
+    connection - the object reference for the SSHClient class
+    session - the ssh session to the remote host
+    parsed_steps - the parsed yaml configuration step for installing/uninstalling packages
+    config_list - the yaml parsed configuration values
+    install - boolean value, true means installing packages, else uninstalling
+  """
   if "packages" in parsed_steps:
     packages = check_env_var(parsed_steps["packages"])
     params_present(packages, config_list)
@@ -107,8 +95,15 @@ def manage_dependencies(connection, session, parsed_steps, config_list, install)
     print("ERROR: Packages in: " + parsed_steps["packages"] + "is not defined in the right format \{\{ variable \}\}")
     sys.exit()
 
-# Restarts the specified service
 def restart_service(connection, session, services, log=False):
+  """Restart the specified service
+
+  variable inputs:
+    connection - the object reference for the SSHClient class
+    session - the ssh session to the remote host
+    services - the services that require a restart
+    log - enables verbose logging of steps executed. default is false.
+  """
   if type(services) == list:
     for service in services:
       print("Restart the service: " + service)
@@ -120,9 +115,15 @@ def restart_service(connection, session, services, log=False):
     print("ERROR: services needs to be of type list but is of type:", type(services))
     sys.exit()
 
-# Transfers a file from the /files dir to the remote instance 
-# and sets metadata permissions if available
 def transfer_file(connection, session, parsed_steps, config_list):
+  """ Transfer a file from local /files dir to remote host and set metadata
+  
+  variable inputs:
+    connection - the object reference for the SSHClient class
+    session - the ssh session to the remote host
+    parsed_steps - the parsed yaml configuration step for transferring a file to remote host
+    config_list - the yaml parsed configuration values
+  """
   if "src_location" in parsed_steps and "dst_location" in parsed_steps:
     # check if the configure entry is present
     src_location = check_env_var(parsed_steps["src_location"])
@@ -173,7 +174,34 @@ def transfer_file(connection, session, parsed_steps, config_list):
   else:
     print("ERROR: src or dst location are not properly set")
     sys.exit()
-      
+
+# Used to print an ASCII banner for Aurora
+ascii_banner = pyfiglet.figlet_format("Aurora")
+print("*"*50)
+print("*"*50 + "\n")
+print(ascii_banner)
+
+if len(sys.argv) < 3:
+   print('ERROR: no arguments passed')
+   sys.exit()
+
+step_file = "../steps/" + sys.argv[1]
+config_file = "../environment/" + sys.argv[2]
+
+print("*"*50)
+print("*"*50 + "\n")
+
+if os.path.exists(step_file) and os.path.exists(config_file):
+  print("Configuration Step file and values file are valid")
+else:
+  print("ERROR: The step file and values file need to be checked")
+  sys.exit()
+  
+print("Loading Config from: " + config_file + "\n")
+
+# Read the configuration values like hosts, ssh params, etc
+with open(config_file) as file:
+  config_list = yaml.load(file, Loader=yaml.FullLoader)
 
 print("*"*50 + "\n")
 print("Config loaded successfully from: " + config_file + "\n")

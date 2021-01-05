@@ -21,8 +21,9 @@ class SSHClient:
     self.username = username
     self.password = password
 
-  # Create an SSH connection with the specified remote host
   def connect(self):
+    """Create an SSH connection with the specified remote host
+    """
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())  
     try:
@@ -39,8 +40,14 @@ class SSHClient:
       print("\nSSH is successful to device " + self.hostname + "\n")
       return ssh
 
-  # Run commands on a connected remote host
   def exec_command(self, ssh, command, log=False):
+    """Run commands on a connected remote host
+
+    variable inputs:
+      ssh - the ssh session to the remote host
+      command - the command that will be executed on the remote host
+      log - enables verbose logging of steps executed. default is false.
+    """
     print("Running command: " + command)
     stdin, stdout, stderr = ssh.exec_command(command, timeout=1000)
     ssh.ssh_output = stdout.readlines()
@@ -53,8 +60,14 @@ class SSHClient:
         print('\n'.join(ssh.ssh_output))
     print("*"*50 + "\n")
 
-  # Transfer files from the local /files dir to a remote host
   def sftp_file(self, ssh, src_location, dst_location):
+    """Transfer files from the local /files dir to a remote host
+
+    variable inputs:
+      ssh - the ssh session to the remote host
+      src_location - the local file in the /files dir
+      dst_location - the dst path on the remote host
+    """
     print("SFTP file: " + src_location + " to " + dst_location)
     sftp = ssh.open_sftp()
     sftp.put(src_location, dst_location)
