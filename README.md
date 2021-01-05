@@ -158,7 +158,18 @@ To run Aurora, we need to perform the following steps:
 
 - We need to `cd` into the `src/environment` dir where the env var configuration values file is located. In the current project we have `dev.yaml` which serves as this file. In `dev.yaml`, replace the `{{ pwd }}` param with the pwd of the SSH host.
 - We need to `cd` into the `/src/aurora/` dir where the `controller.py` file is located. 
-- Run the following command: `python3 controller.py configure-php-log.yaml dev.yaml` where the `configure-php-log.yaml` is the step file we write in the `/steps` dir and the `dev.yaml` is the configuration value file we write in the `/environment` dir.
+- Run the following command: 
+
+```
+python3 controller.py configure-php-log.yaml dev.yaml
+```
+
+This is of the form:
+
+```
+python3 controller.py <step_file.yaml> <env_var_configuration.yaml>
+```
+The `configure-php-log.yaml` is the step file we write in the `/steps` dir and the `dev.yaml` is the configuration value file we write in the `/environment` dir.
 
 ## Author:
 
