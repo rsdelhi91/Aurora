@@ -1,4 +1,4 @@
-# slack-task-2
+# Configuration Manager - Aurora
 
 ## Aurora Documentation
 
